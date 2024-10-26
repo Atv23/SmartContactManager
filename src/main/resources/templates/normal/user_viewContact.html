@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/user_base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<!-- ALERT MESSAGE -->
+		<div th:if="${message}" th:classappend="${message.type}"
+			class="alert py-1 mx-5" role="alert" id="errorMessage">
+			<p class="text-center mt-3">
+				<strong th:text="${message.content}"></strong>
+			</p>
+		</div>
+		<div class="card mx-5 my-4">
+			<div class="card-body my-card">
+				<div class="d-flex mb-4 justify-content-center align-items-center">
+					<img class="me-2" style="height: 50px; width: 50px;"
+						th:src="@{/img/contact-list.png}" alt="Contact List Icon">
+					<h1 class="text-center  custom-h1">Your Contacts</h1>
+				</div>
+
+				<!-- SEARCH BAR -->
+				<div class="search-container my-4">
+					<div class="input-group">
+						 <input id="search-contact" onkeyup="search()" 
+						    type="text" class="form-control"
+							placeholder="Search contact by name" /><span class="input-group-text"> <i
+							class="fa-solid fa-magnifying-glass detail-icons"></i>
+						</span>
+					</div>
+					<div class="search-result">
+						<!-- SEARCH RESULT -->
+					</div>
+				</div>
+
+
+
+				<!-- TABLE -->
+				<div class="table-responsive"> <!-- Add this div for responsiveness -->
+				<table
+					class="table table-striped table-hover table-bordered text-center">
+					<thead class="bg-primary text-white">
+						<tr>
+							<th scope="col">S.No.</th>
+							<th scope="col">Contact Name</th>
+							<th scope="col">Phone No.</th>
+							<th scope="col">Email Address</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="c,stat : ${contactList}">
+							<th scope="row"
+								th:text="${(currentPage*itemPerPage)+stat.index + 1}"></th>
+							<td><img
+								th:src="${c.contactPic != null ? '/img/' + c.contactPic : '/img/default-pic.png'}"
+								alt="" class="profile_pic" /> <span th:text="${c.contactName}"
+								class="ms-2"></span></td>
+
+							<td th:text="${c.contactNumber}"></td>
+
+							<td th:text="${c.contactEmail}"></td>
+
+							<td class="mx-0 px-0">
+								<!-- DELETE CONTACT --> <a href="#"
+								th:onclick="|deleteContact(${c.contactId})|"
+								class="text-danger action-icon" data-bs-toggle="tooltip"
+								data-bs-placement="top" title="Delete Contact"> <i
+									class="bi bi-trash3-fill"></i>
+							</a> <!-- UPDATE CONTACT -->
+								<form th:action="@{|/user/updateContact/${c.contactId}|}"
+									method="post" class="d-inline">
+									<button type="submit" class="text-warning ms-4 action-icon"
+										data-bs-toggle="tooltip" data-bs-placement="top"
+										title="Update Contact">
+										<i class="fa-solid fa-pen-to-square"></i>
+									</button>
+								</form> <!-- VIEW CONTACT --> <a
+								th:href="@{|/user/contact/${c.contactId}|}"
+								class="text-primary ms-4 action-icon" data-bs-toggle="tooltip"
+								data-bs-placement="top" title="View Contact"> <i
+									class="bi bi-eye-fill"></i>
+							</a>
+							</td>
+					</tbody>
+				</table>
+				</div>
+				<!-- PAGINATION -->
+				<nav aria-label="Page navigation example ">
+					<ul class="pagination page-scroller">
+						<li class="page-item"
+							th:classappend="${currentPage == 0?' disabled':''}"><a
+							class="page-link symbol"
+							th:href="@{|/user/view-contact/${currentPage-1}|}"
+							aria-label="Previous"> <span aria-hidden="true"><i
+									class="fa-solid fa-circle-chevron-left"></i></span>
+						</a></li>
+						<li th:each="i: ${#numbers.sequence(1,totalPage)}"
+							class="page-item"
+							th:classappend="${currentPage==i-1?'active':''}"><a
+							class="page-link" th:text="${i}"
+							th:href="@{|/user/view-contact/${i-1}|}"></a></li>
+
+						<li class="page-item"
+							th:classappend="${currentPage == totalPage - 1?' disabled':''}"><a
+							class="page-link symbol"
+							th:href="@{|/user/view-contact/${currentPage+1}|}"
+							aria-label="Next"> <span aria-hidden="true"><i
+									class="fa-solid fa-circle-chevron-right"></i></span>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</section>
+
+
+</body>
+</html>

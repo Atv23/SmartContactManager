@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/user_base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<div class="mx-5 my-5">
+			<div class="text-center mt-2 mx-5">
+				<!-- Profile Picture -->
+				<img
+					th:src="${user.userPic != null ? '/img/' + user.userPic : '/img/default-pic.png'}"
+					alt="Profile Pic"
+					class=" mt-4 detail-img mb-4 bg-info p-1 shadow-lg" />
+
+				<!-- Welcome Message -->
+				<div class="mb-2 welcome-message">
+					Welcome <span th:text="${user.userName}">User</span>!
+				</div>
+
+				<!-- Dashboard Cards -->
+				<div class="row">
+					<!-- Add Contact -->
+					<div class="col-md-6 mb-4">
+						<div class="dashboard-square">
+							<i class="fas fa-user-plus dashboard-icons text-info"></i>
+							<h5 class="mt-2">Add Contact</h5>
+							<a href="/user/add-contact" class="btn btn-info mt-2">Go</a>
+						</div>
+					</div>
+
+					<!-- View Contacts -->
+					<div class="col-md-6 mb-4">
+						<div class="dashboard-square">
+							<i class="fas fa-address-book dashboard-icons text-danger"></i>
+							<h5 class="mt-2">View Contacts</h5>
+							<a th:href="@{/user/view-contact/0}" class="btn btn-danger mt-2">Go</a>
+						</div>
+					</div>
+
+					<!-- Profile -->
+					<div class="col-md-6 mb-4">
+						<div class="dashboard-square">
+							<i class="fas fa-user dashboard-icons text-warning"></i>
+							<h5 class="mt-2">View Profile</h5>
+							<a href="/user/profile" class="btn btn-warning mt-2">Go</a>
+						</div>
+					</div>
+
+					<!-- Settings -->
+					<div class="col-md-6 mb-4">
+						<div class="dashboard-square">
+							<i class="fas fa-cogs dashboard-icons text-secondary"></i>
+							<h5 class="mt-2">Settings</h5>
+							<a href="#" class="btn btn-secondary mt-2">Go</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

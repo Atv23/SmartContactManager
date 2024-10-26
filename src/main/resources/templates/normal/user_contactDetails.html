@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/user_base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="card mx-5 my-4">
+			<div class="card-body detail-card-body my-card" th:if="${contact}">
+				<div class="text-center mt-2">
+					<img
+						th:src="${contact.contactPic != null ? '/img/' + contact.contactPic : '/img/default-pic.png'}"
+						alt="Profile Pic"
+						class="detail-img rounded-circle bg-info p-1 shadow-lg" />
+					<!-- Contact Name in h1 -->
+					<h1 class="detail-title mt-3" th:text="${contact.contactName}"></h1>
+				</div>
+				<div class="mt-4 row">
+					<div class="col-md-6">
+						<div class="detail-card-background">
+							<p>
+								<i class="bi bi-telephone-fill me-2 detail-icons"></i> <strong>Phone
+									Number:</strong> <span th:text="${contact.contactNumber}"></span>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="detail-card-background">
+							<p>
+								<i class="bi bi-envelope-fill me-2 detail-icons"></i> <strong>Email:</strong>
+								<span th:text="${contact.contactEmail}"></span>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="detail-card-background">
+							<p>
+								<i class="fa-solid fa-id-card detail-icons"></i> <strong
+									class="ms-1">Nickname:</strong> <span
+									th:text="${contact.contactNickname==''? 'N/A':contact.contactNickname}"></span>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="detail-card-background">
+							<p>
+								<i class="bi bi-briefcase-fill me-2 detail-icons"></i> <strong>Work:</strong>
+								<span
+									th:text="${contact.contactWork==''? 'N/A':contact.contactWork}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<!-- Description spanning across both columns -->
+				<div class="mt-3">
+					<p>
+						<strong>Description:</strong>
+					</p>
+					<div class="detail-description border p-2 rounded"
+						th:utext="${contact.contactDescription==''? 'N/A':contact.contactDescription}"></div>
+				</div>
+				<!-- Action buttons for Delete, Update, and Back to Contacts -->
+				<div class="text-center mt-4">
+					<!-- th:href="@{|/user/deleteContact/${contact.contactId}|}" -->
+					<a class="btn btn-danger detail-btn me-2 my-2" href="#"
+						th:onclick="|deleteContact(${contact.contactId})|">Delete</a>
+					<!-- UPDATE CONTACT -->
+					<form th:action="@{|/user/updateContact/${contact.contactId}|}"
+						method="post" class="d-inline">
+						<button type="submit" class="btn btn-warning detail-btn me-2 my-2">
+							Update
+						</button>
+					</form>
+				</div>
+				<div class="text-center">
+					<a class="btn btn-info detail-btn shadow-sm"
+						th:href="@{/user/view-contact/0}"> <i
+						class="bi bi-arrow-left-circle me-2"></i> Back to Contacts
+					</a>
+				</div>
+			</div>
+			<div th:unless="${contact}" class="container text-center">
+				<h1 style="color: black !important;">You do not have permission
+					to see this contact!</h1>
+			</div>
+		</div>
+	</section>
+
+
+
+
+
+</body>
+</html>

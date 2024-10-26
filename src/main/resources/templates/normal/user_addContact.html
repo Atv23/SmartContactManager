@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/user_base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container my-4">
+			<!-- ERROR MESSAGE -->
+			<div th:if="${message}" th:classappend="${message.type}"
+				class="alert py-1" role="alert" id="errorMessage">
+				<p class="text-center mt-3">
+					<strong th:text="${message.content}"></strong>
+				</p>
+			</div>
+			<div class="card mx-auto my-card mt-5">
+				<div class="card-body mx-5">
+					<div class="d-flex justify-content-center align-items-center">
+						<img class="me-2" style="height: 50px; width: 50px;"
+							th:src="@{/img/add-user.png}" alt="Add Contact Icon">
+						<h1 class="mb-0">Add Contact</h1>
+					</div>
+					<!-- FORM -->
+					<form action="#" th:object="${contact}" method="post"
+						th:action="@{/user/processContact}" enctype="multipart/form-data">
+
+						<!-- First row (Contact Name and Nickname) -->
+						<div class="row my-3">
+							<div class="col-md-6">
+								<!-- Contact Name Input -->
+								<div class="form-group">
+									<label for="contactName" class="font-weight-bold">Contact
+										Name</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"
+												style="background-color: #abaeaf; padding: 12px;"> <i
+												class="fa fa-id-card"></i> <!-- Changed icon to id-card -->
+											</span>
+										</div>
+										<input type="text" name="contactName" id="contactName"
+											placeholder="Enter contact name" class="form-control"
+											th:value="${contact.contactName}"
+											th:classappend="${#fields.hasErrors('contactName') ? 'is-invalid':''}" />
+										<!-- displaying errors -->
+										<div th:text="${#fields.errors('contactName')}"
+											id="validationServer03Feedback" class="invalid-feedback"></div>
+									</div>
+									<small class="form-text text-muted">Please enter the
+										name of the contact.</small>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<!-- Nickname Input -->
+								<div class="form-group">
+									<label for="ContactNickname" class="font-weight-bold">Nickname</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"
+												style="background-color: #abaeaf; padding: 12px;"> <i
+												class="fa fa-user-circle"></i> <!-- Icon for nickname -->
+											</span>
+										</div>
+										<input type="text" name="contactNickname" id="nickname"
+											placeholder="Enter nickname" class="form-control"
+											th:value="${contact.contactNickname}" />
+									</div>
+									<small class="form-text text-muted">Please enter the
+										nickname of the contact.</small>
+								</div>
+							</div>
+						</div>
+
+						<!-- Second row (Phone Number and Email) -->
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<!-- Phone Number Input -->
+								<div class="form-group">
+									<label for="phoneNumber" class="font-weight-bold">Phone
+										Number</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"
+												style="background-color: #abaeaf; padding: 12px;"> <i
+												class="fa fa-phone"></i>
+											</span>
+										</div>
+										<input type="tel" name="contactNumber" id="phoneNumber"
+											placeholder="Enter phone number" class="form-control"
+											th:value="${contact.contactNumber}"
+											th:classappend="${#fields.hasErrors('contactNumber') ? 'is-invalid':''}" />
+										<!-- displaying errors -->
+										<div th:each="e: ${#fields.errors('contactNumber')}"
+											th:text="${e}" id="validationServer03Feedback"
+											class="invalid-feedback"></div>
+									</div>
+									<small class="form-text text-muted">Please enter the 10
+										digit phone number.</small>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<!-- Email Input -->
+								<div class="form-group">
+									<label for="email" class="font-weight-bold">Email</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"
+												style="background-color: #abaeaf; padding: 12px;"> <i
+												class="fa fa-envelope"></i>
+											</span>
+										</div>
+										<input type="email" name="contactEmail" id="email"
+											placeholder="Enter email" class="form-control" required
+											th:value="${contact.contactEmail}"
+											th:classappend="${#fields.hasErrors('contactEmail') ? 'is-invalid':''}" />
+										<!-- displaying errors -->
+										<div th:text="${#fields.errors('contactEmail')}"
+											id="validationServer03Feedback" class="invalid-feedback"></div>
+									</div>
+									<small class="form-text text-muted">Please enter the
+										email address.</small>
+								</div>
+							</div>
+						</div>
+
+						<!-- Third row (Work and File Upload) -->
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<!-- Work Input -->
+								<div class="form-group">
+									<label for="work" class="font-weight-bold">Work</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"
+												style="background-color: #abaeaf; padding: 12px;"> <i
+												class="fa fa-briefcase"></i>
+											</span>
+										</div>
+										<input type="text" name="contactWork" id="work"
+											placeholder="Enter work position" class="form-control"
+											th:value="${contact.contactWork}" />
+									</div>
+									<small class="form-text text-muted">Please enter your
+										work position.</small>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<!-- File Upload Input -->
+								<div class="form-group">
+									<label for="imageUpload" class="font-weight-bold">Upload
+										Image</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"
+												style="background-color: #abaeaf; padding: 12px;"> <i
+												class="fa fa-image"></i> <!-- Icon for image upload -->
+											</span>
+										</div>
+										<input type="file" name="uploadPic" id="imageUpload"
+											class="form-control" />
+									</div>
+									<small class="form-text text-muted">Please upload an
+										image for the contact.</small>
+								</div>
+							</div>
+						</div>
+
+						<!-- Description Textarea -->
+						<div class="form-group">
+							<label for="description" class="font-weight-bold">Description</label>
+							<textarea name="contactDescription" id="mytextarea" rows="3"
+								placeholder="Enter contact description" class="form-control"
+								th:text="${contact.contactDescription}"
+								th:classappend="${#fields.hasErrors('contactDescription') ? 'is-invalid':''}"></textarea>
+							<!-- displaying errors -->
+							<div th:text="${#fields.errors('contactDescription')}"
+								id="validationServer03Feedback" class="invalid-feedback"></div>
+							<small class="form-text text-muted">Please provide a
+								brief description.</small>
+						</div>
+
+						<!-- Submit Button -->
+						<div class="text-center mt-4">
+							<button type="submit" class="btn btn-info">Add Contact</button>
+							<button type="reset" class="btn btn-warning ms-2">Reset</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.tiny.cloud/1/79qkcwq1h94nfhi6g6dt7ka10vxs2qx8cj846ashog8ncniy/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+			<script>
+			tinymce.init({
+				  selector: '#mytextarea'
+			});</script>
+	</section>
+
+
+
+
+
+</body>
+</html>
